@@ -7,7 +7,7 @@ const path = require('path');
 const app = express();
 const PORT = 5000;
 
-// Конфігурація Multer для завантаження файлів
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
@@ -17,18 +17,18 @@ const storage = multer.diskStorage({
   },
 });
 
-// Фільтр для прийняття лише зображень
+
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image/')) {
-    cb(null, true); // Прийняти файл
+    cb(null, true); 
   } else {
-    cb(new Error('Тільки зображення дозволені!'), false); // Відхилити файл
+    cb(new Error('Тільки зображення дозволені!'), false); 
   }
 };
 
 const upload = multer({ storage, fileFilter });
 
-// Маршрут для завантаження фото
+
 app.post('/upload', upload.single('photo'), async (req, res) => {
   try {
     if (!req.file) {
@@ -38,7 +38,7 @@ app.post('/upload', upload.single('photo'), async (req, res) => {
     const filePath = req.file.path;
     const fileName = req.file.filename;
 
-    // Оптимізація та збереження у декількох розмірах
+
     await Promise.all([
       sharp(filePath)
         .resize(800, 600)
@@ -67,7 +67,7 @@ app.post('/upload', upload.single('photo'), async (req, res) => {
 // Маршрут для очищення обох папок (uploads та uploads/resized)
 app.post('/clear-all', async (req, res) => {
   try {
-    await fs.emptyDir('uploads'); // Очищуємо основну папку
+    await fs.emptyDir('uploads'); // очищуємо основну папку
     await fs.emptyDir('uploads/resized'); // Очищуємо папку resized
     res.status(200).json({ message: 'Усі картинки успішно видалені!' });
   } catch (error) {

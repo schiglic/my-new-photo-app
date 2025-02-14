@@ -9,7 +9,7 @@ function App() {
     setFile(e.target.files[0]);
   };
 
-  // Обробник відправки форми
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,13 +39,11 @@ function App() {
     }
   };
 
-  // Обробник очищення форми
   const handleClearForm = () => {
-    setFile(null); // Очищаємо вибраний файл
-    setMessage(''); // Очищаємо повідомлення
+    setFile(null); 
+    setMessage(''); 
   };
 
-  // Обробник очищення обох папок
   const handleClearAll = async () => {
     try {
       const response = await fetch('http://localhost:5000/clear-all', {
